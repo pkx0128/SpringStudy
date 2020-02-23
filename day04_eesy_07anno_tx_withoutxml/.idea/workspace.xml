@@ -8,6 +8,20 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="1YBxPq8vFm694i0alQOO5Dus1Kw" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -26,6 +40,29 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="TestService.testTranfer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="day04_eesy_07anno_tx_withoutxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.pankx.test" />
+      <option name="MAIN_CLASS_NAME" value="test.TestService" />
+      <option name="METHOD_NAME" value="testTranfer" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestService.testTranfer" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -37,6 +74,7 @@
       <option name="presentableId" value="Default" />
       <updated>1582429767682</updated>
       <workItem from="1582429769103" duration="15000" />
+      <workItem from="1582431858425" duration="3546000" />
     </task>
     <servers />
   </component>
