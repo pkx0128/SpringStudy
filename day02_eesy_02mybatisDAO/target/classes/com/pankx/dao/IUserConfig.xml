@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pankx.dao.IUserDao">
+<!--查询所有数据-->
+    <select id="findAll" resultType="user">
+        SELECT id,birthday,username,sex,address FROM user
+    </select>
+<!--    插入数据-->
+    <insert id="saveUser" parameterType="com.pankx.domain.User">
+        <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
+           SELECT  last_insert_id()
+        </selectKey>
+        INSERT INTO user (username,birthday,sex,address) VALUES(#{username},#{birthday},#{sex},#{address})
+    </insert>
+<!--更新数据-->
+    <update id="updateUser" parameterType="com.pankx.domain.User">
+        UPDATE  user SET username= #{username},sex= #{sex},address=#{address} WHERE id=#{id}
+    </update>
+<!--根据id删除用户-->
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        DELETE FROM user WHERE id=#{id}
+    </delete>
+<!--根据id查询一条数据-->
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.pankx.domain.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+<!--根据用户名模糊查询-->
+    <select id="findByUserName" parameterType="java.lang.String" resultType="com.pankx.domain.User">
+        SELECT * FROM user WHERE username LIKE #{name}
+    </select>
+
+
+    <select id="findtotal" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM user
+    </select>
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--配置代理的Service-->
+<!--    <bean id="proxyAccountService" factory-bean="beanFactory" factory-method="getAccountService"></bean>-->
+<!--    配置BeanFactory对象-->
+<!--    <bean id="beanFactory" class="com.pankx.factory.BeanFactory">-->
+<!--        <property name="accountService" ref="accountService"/>-->
+<!--        <property name="transactionManager" ref="transactionManager"/>-->
+<!--    </bean>-->
+
+<!--    配置Service对象-->
+    <bean id="accountService" class="com.pankx.service.impl.AccountServiceImpl">
+        <!--注入dao-->
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+
+<!--    配置Dao对象-->
+    <bean id="accountDao" class="com.pankx.dao.impl.AccountDaoImpl">
+<!--        注入QueryRunner-->
+        <property name="queryRunner" ref="queryRunner"/>
+        <property name="connectionUtils" ref="connectionUtils"/>
+    </bean>
+
+<!--    配置QueryRunner-->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+<!--        注入数据源-->
+<!--        <constructor-arg name="ds" ref="dataSource"></constructor-arg>-->
+    </bean>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost/eesy"/>
+        <property name="user" value="root"/>
+        <property name="password" value="Pankx0128"/>
+    </bean>
+
+<!--    配置TransactionManager-->
+    <bean id="transactionManager" class="com.pankx.utils.TransactionManager">
+        <property name="connectionUtils" ref="connectionUtils"/>
+    </bean>
+
+<!--    配置ConnectionUtils-->
+    <bean id="connectionUtils" class="com.pankx.utils.ConnectionUtils">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="pt1" expression="execution(* com.pankx.service.impl.*.*(..))"/>
+        <aop:aspect id="transactionManager" ref="transactionManager">
+            <aop:before method="beginTransaction" pointcut-ref="pt1"></aop:before>
+            <aop:after-returning method="commint" pointcut-ref="pt1"></aop:after-returning>
+            <aop:after-throwing method="rollback" pointcut-ref="pt1"></aop:after-throwing>
+            <aop:after method="release" pointcut-ref="pt1"></aop:after>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

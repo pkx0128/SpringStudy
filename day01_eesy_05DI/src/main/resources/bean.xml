@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <!--bean的依赖注入
+                依赖注入：
+                        Dependency Injection
+                IOC的作用：
+                        解耦即降低程序之前的耦合度（依赖关系）
+                依赖关系：
+                        当前类中需要用到其他类的对象
+                能注入的数据类型：有三类
+                        1.基本数据类型和String
+                        2.其他bean类型（在配置文件配置或注解中配置过的）
+                        3.复杂数据类型/集合数据类型
+                 注入方式：有三种
+                        1.构造函数注入
+                        2.set方法注入
+                        3.注解方式注入
+        -->
+<!--            构造函数注入使用constructor-arg标签
+                标签的位置：bean标签内
+                标签属性：
+                        type:用于指定注入数据的类型，同时也是构造函数中某些或某个参数的数据类型
+                        index：
+                        name
+                        value
+                        ref
+
+-->
+        <bean id="accountService" class="com.pankx.service.imple.AccountServiceImple">
+                <constructor-arg name="name" value="pankx" type="java.lang.String"></constructor-arg>
+                <constructor-arg name="age"  value="18" type="java.lang.Integer"></constructor-arg>
+                <constructor-arg name="birthday" ref="birthday"></constructor-arg>
+        </bean>
+        <bean id="birthday" class="java.util.Date" ></bean>
+
+        <bean id="accountService2" class="com.pankx.service.imple.AccountServiceImple2">
+                <property name="name" value="pankx"/>
+                <property name="age" value="19"/>
+                <property name="birthday" ref="birthday"/>
+        </bean>
+
+        <bean id="accountService3" class="com.pankx.service.imple.AccountServiceImple3">
+                <property name="myString">
+                        <array value-type="java.lang.String">
+                                <value>pankx</value>
+                                <value>pankx2</value>
+                        </array>
+                </property>
+
+
+                <property name="mylist">
+                        <list>
+                                <value>list1</value>
+                                <value>list2</value>
+                        </list>
+                </property>
+
+                <property name="myset">
+                        <set>
+                                <value>myset1</value>
+                                <value>myset2</value>
+                        </set>
+                </property>
+
+                <property name="mymap">
+                        <map>
+                                <entry key="test1" value="test1"></entry>
+                                <entry key="test2" value="test2"></entry>
+                        </map>
+                </property>
+
+                <property name="properties">
+                        <props>
+                                <prop key="prop1"> prop1</prop>
+                                <prop key="prop2">prop2</prop>
+                        </props>
+                </property>
+        </bean>
+
+
+</beans>

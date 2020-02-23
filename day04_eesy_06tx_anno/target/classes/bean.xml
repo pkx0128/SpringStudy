@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--配置容器创建时要扫描的包-->
+    <context:component-scan base-package="com.pankx"/>
+
+
+
+<!--    配置JdbcTemplate-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >
+<!--        <constructor-arg name="dataSource" ref="datasource"></constructor-arg>-->
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
+
+<!--    配置datasource-->
+    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/eesy"/>
+        <property name="username"   value="root"/>
+        <property name="password"   value="Pankx0128"/>
+    </bean>
+
+<!--
+    spring中基于注解的声明式事务控制配置步骤
+    1.配置事务管理器
+    2.配置事务通知
+            导入事务的约束tx和aop的命名空间和约束
+            使用tx:advice标签配置事务的通知
+                id:给事务通知起一个唯一标识
+                transaction-manager:给事务通知设置一个管理器的引用(把事务通知交给管理器管理)
+    3.配置配置AOP的通用切入点表达式
+    4.建立切入点表达式与通知的的对应关系
+                能过标签aop:advisor配置
+                    advice-ref:通知的引用
+                    pointcut-ref:切入点表达式的引用
+    5.配置事务通知的属性
+        在标签tx:advice内部配置
+
+
+
+-->
+<!--    配置事管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
+<!--    配置AOP-->
+    <aop:config>
+<!--    配置AOP的切入点表达式-->
+        <aop:pointcut id="pt1" expression="execution(* com.pankx.service.impl.*.*(..))"/>
+    </aop:config>
+
+<!--开启spring事务控制对注解的支持-->
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--        创建隱bean的三种方式-->
+<!--        每一种：使用默认构造方法创建-->
+<!--        <bean id="accountService" class="com.pankx.service.imple.AccountServiceImple"></bean>-->
+<!--        第二种：使用普通工厂类中的方法创建bean(使用某个类中的方法创建bean，并存入spring容器中)
+        <bean id="instanceFactory" class="com.pankx.factory.InstanceFactory"></bean>
+        <bean id="accountService"  factory-bean="instanceFactory" factory-method="getAccountService"></bean>
+        -->
+<!--        第三种：使用普通工厂类中的静态方法创建bean（使用某个类的静态方法创建bean并存入spring容器中
+        <bean id="accountService" class="com.pankx.factory.StaticInstanceFactory" factory-method="getAccountService"></bean>
+  -->
+<!--        bean的作用域使用bean标签中的scope属性设置
+                值有：  singleton：单例，为默认值
+                       prototype:多例
+                       request:作用于web应用的请求范围
+                       session:作用于web应用的会话范围
+                       global-session:作用于集群会话的范围（全局会话的范围）当不是集群环境时就是session
+
+             bean生命周期：
+                        单例：
+                        出生：容器创建时
+                        活着：容器还在对象一直活着
+                        死亡：容器销毁，对象销亡
+                        总结：单例模式下，对象的生命周期与容器生命周期相同
+
+-->
+        <bean id="accountService" class="com.pankx.service.imple.AccountServiceImple" scope="singleton" init-method="init" destroy-method="destory"></bean>
+</beans>

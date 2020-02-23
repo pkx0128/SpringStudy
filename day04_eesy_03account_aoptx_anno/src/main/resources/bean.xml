@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+<!--    配置Spring创建容器时要扫描的包-->
+    <context:component-scan base-package="com.pankx"></context:component-scan>
+<!--    配置aop对注解的支持-->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+    
+    
+<!--    配置aop-->
+<!--    <aop:config>-->
+<!--        <aop:pointcut id="pt1" expression="execution(* com.pankx.service.impl.*.*(..))"/>-->
+<!--        <aop:aspect id="asp" ref="transactionManager">-->
+<!--            <aop:before method="beginTransaction" pointcut-ref="pt1"></aop:before>-->
+<!--            <aop:after-returning method="commint" pointcut-ref="pt1"></aop:after-returning>-->
+<!--            <aop:after-throwing method="rollback" pointcut-ref="pt1"></aop:after-throwing>-->
+<!--            <aop:after method="release" pointcut-ref="pt1"></aop:after>-->
+<!--         </aop:aspect>-->
+<!--    </aop:config>-->
+
+
+<!--    配置QueryRunner-->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+<!--        注入数据源-->
+<!--        <constructor-arg name="ds" ref="dataSource"></constructor-arg>-->
+    </bean>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost/eesy"/>
+        <property name="user" value="root"/>
+        <property name="password" value="Pankx0128"/>
+    </bean>
+
+<!--    配置TransactionManager-->
+<!--    <bean id="transactionManager" class="com.pankx.utils.TransactionManager">-->
+<!--        <property name="connectionUtils" ref="connectionUtils"/>-->
+<!--    </bean>-->
+
+
+</beans>
